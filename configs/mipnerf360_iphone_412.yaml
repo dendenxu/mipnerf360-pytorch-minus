@@ -1,0 +1,70 @@
+# Configuration for vanilla NeRF for background
+# Should adopt mipnerf360 loss for consistency
+# Should consider RawNeRF improvements for HDRI
+# Should add step function for convert sRGB NeRF to linear environment
+
+# Section: Network Configuration
+task: environ
+exp_name: mipnerf360_iphone_412
+parent_cfg: configs/default.yaml
+
+# Section: Data Options
+training_view: [0]
+# prettier-ignore
+test_view: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+begin_ith_frame: 0 # remove first few static frames
+num_train_frame: 1152
+num_eval_frame: 1152
+frame_interval: 1
+train_dataset:
+    data_root: data/iphone/iphone_412
+    human: iphone_412
+    ann_file: data/iphone/iphone_412/annots.npy
+    split: train
+test_dataset:
+    data_root: data/iphone/iphone_412
+    human: iphone_412
+    ann_file: data/iphone/iphone_412/annots.npy
+    split: test
+
+# Section: Training Configurations
+network_module: lib.networks.environ.mipnerf360_network
+renderer_module: lib.networks.renderer.mipnerf360_renderer
+trainer_module: lib.train.trainers.mipnerf360_trainer
+train_dataset_module: lib.datasets.ray_dataset
+test_dataset_module: lib.datasets.mipnerf360_dataset
+novel_view_cfg:
+    test_dataset_module: lib.datasets.mipnerf360_demo_dataset
+train:
+    lr: 2e-3 # converges a little bit faster, proposal loss better
+    batch_size: 1
+    num_workers: 4
+    epoch: 500
+    scheduler:
+        # type: warmup_exponential # if not enabled, following warmup params will not have effect
+        warmup_factor: 0.1
+        warmup_epochs: 1
+        warmup_method: linear
+        gamma: 0.01 # needs slower learning rate decay?
+        decay_epochs: 500
+erode_dilate_mask: False # use mask as is
+mask_bkgd: False # do not fill bkgd pixels (fg)
+eval_ep: 500
+
+n_samples: 64 # should we also have a coarse network?
+n_importance: 32 # should we also have a coarse network?
+n_rays: 8192 # number of rays per-image (actual batch size)
+clip_near: 0.2 # 0.5m clip near? -> lots of samples wasted
+clip_far: 30.0 # define a radius 20 sphere to clip far
+box_far: 30.0 # define an arbitrarily large 40-40-40 bounding box
+bg_brightness: -1.0 # use random background color? # white bkgd seems to be converging a little bit faster than random
+ratio: 1.0 # full image training
+
+img_loss_weight: 1.0
+prop_loss_weight: 1.0
+dist_loss_weight: 0.01
+novel_view_z_off: 0.0
+clip_grad_norm: 0.001 # essential for stable training when lr is high
+
+mask_dir: bkgd_mask # use mask for background regions
+ray_cache: ray_cache.h5
