@@ -4,7 +4,7 @@ This repo contains a **PyTorch implementation of [Mip-NeRF 360: Unbounded Anti-A
 
 The author was frequently amazed by the awesome results of the _mipnerf360_ paper (and code repository), but was lacking in motivation to learn a whole new framework (jax) when trying to use some of _mipnerf360_'s amazing techniques. So the author decided to reproduce the code / paper in PyTorch.
 
-The main focus of this repo is to reproduce the fact that mipnerf360 is able to capture extremely detailed appearance and geometry of a large unbounded (or just large) scene with an extremely large 1024 x 8 NeRF network, while maintaining a somewhat reasonable training (2 days on two 3090s) / inference (0.05 fps on one 3090 for 512x512 images) speed. So most of the effort goes into making sure that the proposal network works fine (by making a 1024 x 8 network behave like an 256 x 8 one (16 times more parameters)). Then we ensure that the distortion loss and disparity parameteration (plus the contraction algorithm) works too since they further distribute the network representational power.
+The main focus of this repo is to reproduce the fact that mipnerf360 is able to **capture extremely detailed appearance and geometry of a large unbounded (or just large) scene** with an extremely large 1024 x 8 NeRF network, while maintaining a somewhat reasonable training (2 days on two 3090s) / inference (0.05 fps on one 3090 for 512x512 images) speed. So most of the effort goes into making sure that the *proposal network* works fine **(by making a 1024 x 8 network behave like an 256 x 8 one (16 times more parameters))**. Then we ensure that the *distortion loss* and *disparity parameteration* (plus the *contraction algorithm*) works too since they further **distribute the network representational power**.
 
 The reason why the mip-map part is omitted from the implementation is that it does not contribute too much to the final results (or the **stability of the training process**, which turned out to be the main prick when reproducing) as long as we do not try to render images with extremely low resolution.
 
@@ -42,8 +42,8 @@ I captured the data using my iPhone, so I guess I could distribute it freely?
 
 **Visualize novel views of the trained model**
 
-Switch on vis_novel_view will switch datasets and visualizer used in the module.
-This takes around 1.5 hours on a 3090, use ratio 0.25 for fast previewing.
+Switching on `vis_novel_view` will switch datasets and visualizer used in the module.
+This takes around 1.5 hours on a 3090, use `ratio` 0.25 for fast previewing.
 
 ```shell
 python run.py -t visualize -c configs/mipnerf360_iphone_412.yaml vis_novel_view True ratio 0.5
@@ -51,8 +51,8 @@ python run.py -t visualize -c configs/mipnerf360_iphone_412.yaml vis_novel_view 
 
 **Visualize novel views depth of the trained model**
 
-Switch on vis_novel_view will switch datasets and visualizer used in the module.
-This takes around 1.5 hours on a 3090, use ratio 0.25 for fast previewing.
+Switching on `vis_novel_view` will switch datasets and visualizer used in the module.
+This takes around 1.5 hours on a 3090, use `ratio` 0.25 for fast previewing.
 Median depth seems to be sharper than mean depth (default).
 
 ```shell
@@ -83,6 +83,7 @@ This will train the network with a total effective batch size of 16384 rays per 
 
 Typical speed for training on 3090 is 0.75s/iter.
 It's strongly recommend you create the ray_cache file first by running the previous command.
+Since running it with multiple processes spawned by `torchrun` will not only use up more memory for no reason, but also make it possible to create a corrupted ray_cache file.
 (When the training starts, you can interrupt the single-gpu training and call this command).
 (I would print out various messages to let you know where you are during training/rendering).
 
