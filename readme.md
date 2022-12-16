@@ -1,10 +1,14 @@
 # MipNeRF360-PyTorch (Minus the MipMap (Anti-Aliasing) Part)
 
-This repo contains a **PyTorch implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
+<video src="readme.assets/mipnerf360_iphone_412.mp4"></video>
 
-The author was frequently amazed by the awesome results of the _mipnerf360_ paper (and code repository), but was lacking in motivation to learn a whole new framework (`jax`) when trying to use some of _mipnerf360_'s amazing techniques. So the author decided to reproduce the code/paper in PyTorch.
+<video src="readme.assets/depth.mp4"></video>
 
-The main focus of this repo is to reproduce the fact that mipnerf360 is able to **capture **the **extremely**** detailed appearance** and geometry of a large unbounded (or just large) scene** with an extremely large 1024 x 8 NeRF network, while maintaining a somewhat reasonable training (2 days on two 3090s) / inference (0.05 fps on one 3090 for 512x512 images) speed. So most of the effort goes into making sure that the *proposal network* works fine **(by making a 1024 x 8 network behave like a 256 x 8 one (16 times more parameters))**. Then we ensure that the *distortion loss* and _disparity parameterisation_ (plus the *contraction algorithm*) works too since they further **distribute the network representational power**.
+This repo contains a **`PyTorch` implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
+
+The author was frequently amazed by the awesome results of the _mipnerf360_ paper (and code repository), but was lacking in motivation to learn a whole new framework (`jax`) when trying to use some of _mipnerf360_'s amazing techniques. So the author decided to reproduce the code/paper in `PyTorch`.
+
+The main focus of this repo is to reproduce the fact that mipnerf360 is able to **capture **the **extremely**** detailed appearance** and geometry of a large unbounded (or just large) scene** with an extremely large 1024 x 8 `NeRF` network, while maintaining a somewhat reasonable training (2 days on two 3090s) / inference (0.05 fps on one 3090 for 512x512 images) speed. So most of the effort goes into making sure that the *proposal network* works fine **(by making a 1024 x 8 network behave like a 256 x 8 one (16 times more parameters))**. Then we ensure that the *distortion loss* and _disparity parameterization_ (plus the *contraction algorithm*) works too since they further **distribute the network representational power**.
 
 The reason why the mip-map part is omitted from the implementation is that it does not contribute too much to the final results (or the **stability of the training process**, which turned out to be the main prick when reproducing) as long as we do not try to render images with extremely low resolution.
 
@@ -14,11 +18,11 @@ This repo exists and should only exist for research purposes. The right of the a
 
 ## Installation
 
-We advise using [`miniconda`](https://conda.io/miniconda.html) to manage your python environment, especially so when giant frameworks like PyTorch are involved.
+We advise using [`miniconda`](https://conda.io/miniconda.html) to manage your python environment, especially so when giant frameworks like `PyTorch` are involved.
 
 Optionally, we recommend using [`mamba`](https://mamba.readthedocs.io/en/latest/index.html) as a fast extension of `conda` for fast downloading of packages.
 
-If you believe your environment has the correct PyTorch (and related) packages setup, please just run the example provided below and install any packages that are reported missing.
+If you believe your environment has the correct `PyTorch` (and related) packages setup, please just run the example provided below and install any packages that are reported missing.
 
 Alternatively, you can:
 
