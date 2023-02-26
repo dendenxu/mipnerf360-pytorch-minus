@@ -8,7 +8,7 @@
 
 <video src="readme.assets/depth.mp4"></video> -->
 
-This repo contains a **`PyTorch` implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
+This repo contains an unofficial **`PyTorch` implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
 
 The author was frequently amazed by the awesome results of the _mipnerf360_ paper (and code repository), but was lacking in motivation to learn a whole new framework (`jax`) when trying to use some of _mipnerf360_'s amazing techniques. So the author decided to reproduce the code/paper in `PyTorch`.
 
