@@ -8,7 +8,7 @@
 
 <video src="readme.assets/depth.mp4"></video> -->
 
-This repo contains a **`PyTorch` implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
+This repo contains an unofficial **`PyTorch` implementation of [Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields](https://arxiv.org/abs/2111.12077) minus the mip-map part**.
 
 The author was frequently amazed by the awesome results of the _mipnerf360_ paper (and code repository), but was lacking in motivation to learn a whole new framework (`jax`) when trying to use some of _mipnerf360_'s amazing techniques. So the author decided to reproduce the code/paper in `PyTorch`.
 
@@ -45,6 +45,12 @@ Note that after installing the packages, you may still encounter import errors d
 We provide an example dataset capturing Room 412 of State Lab of CAD&CG, Zhejiang University.
 
 I captured the data using my iPhone, so I guess I could distribute it freely.
+
+[Dataset link (OneDrive)](https://zjueducn-my.sharepoint.com/:f:/g/personal/3180105504_zju_edu_cn/EkFnQfTvbp1NtgJHDjZdEDQBSEVQNjFy8x-0YwMgW6iQFw?e=NEalDm)
+
+[`iphone_412.tar.gz`](https://zjueducn-my.sharepoint.com/personal/3180105504_zju_edu_cn/_layouts/15/download.aspx?UniqueId=7e88081b%2Dfb12%2D41c9%2Db3bb%2Dbb12c407bdcd) should be uncompressed and placed into the `data` directory -> `data/iphone_412/images...`
+
+If you want to utilize the precomputed ray_cache file instead of constructing it from scratch (requires at least 128G of memory), download [`ray_cache_iphone_412.h5`](https://zjueducn-my.sharepoint.com/personal/3180105504_zju_edu_cn/_layouts/15/download.aspx?UniqueId=77f5b2c8%2Deedd%2D4e9e%2Daee5%2D50eb75b865f7) and put it into the `iphone_412` directory (change its name to `ray_cache.h5`) -> `data/iphone_412/ray_cache.h5`.
 
 ## Usage Example
 
